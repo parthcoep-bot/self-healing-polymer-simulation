@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Self-Healing Polymer Composite Coating | LAMMPS Molecular Dynamics & Synthesis Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Chart.js for Interactive Research Plots -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header & Navigation -->
+  <header class="header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="logo-icon">⬡</div>
+        <div>
+          <div class="brand-title">POLYHEAL-MD</div>
+          <div class="brand-sub">COEP Technological University, Pune | Materials Engineering</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#simulation-viewer" class="nav-link">3D Simulator</a>
+        <a href="#interactive-charts" class="nav-link">Data Charts</a>
+        <a href="#simulation-data-tables" class="nav-link">Data Tables</a>
+        <a href="#code-repository" class="nav-link">Code Vault</a>
+        <a href="#downloads" class="btn btn-primary">Download Data & Report</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="badge-pill">✨ Cloud Molecular Dynamics & Synthesis Portal</div>
+      <h1 class="hero-title">
+        Fabrication of Self-Healing Polymer Composite Coating for <span class="gradient-text">Scratch-Resistant Applications</span>
+      </h1>
+      <p class="hero-desc">
+        Interactive computational and experimental repository. Explore real-time LAMMPS coarse-grained nano-scratch simulations, dynamic disulfide metathesis kinetics, raw trajectory logs, and standardized ASTM testing data.
+      </p>
+      
+      <!-- Key Metric Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">2H</div>
+          <div class="stat-label">Pencil Hardness (ASTM D3363)</div>
+          <div class="stat-delta">▲ from HB (Neat PUU)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">93.8%</div>
+          <div class="stat-label">Scratch Depth Healing η (65°C, 1h)</div>
+          <div class="stat-delta">▲ Fully Refilled Trench</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">9.5 N</div>
+          <div class="stat-label">Critical Load Lc (ASTM D7027)</div>
+          <div class="stat-delta">▲ +126% Shear Resistance</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">10 Cycles</div>
+          <div class="stat-label">Multi-Cycle Durability Retention</div>
+          <div class="stat-delta">★ >86.5% Efficiency Retained</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive 3D Simulation Visualizer -->
+  <section id="simulation-viewer" class="section">
+    <div class="section-header">
+      <div class="section-tag">SIMULATION VISUALIZER</div>
+      <h2 class="section-title">Interactive LAMMPS Scratch & Healing Animator</h2>
+      <p class="section-subtitle">Simulate real-time indenter plowing, plastic pile-up, and thermal annealing groove closure.</p>
+    </div>
+
+    <div class="sim-wrapper card">
+      <div class="sim-controls">
+        <div class="control-group">
+          <label for="step-slider">Simulation Timeline: <span id="current-step-display" class="highlight">Step 0 (Virgin Slab)</span></label>
+          <input type="range" id="step-slider" min="0" max="28000" step="500" value="0">
+        </div>
+        <div class="btn-group">
+          <button id="btn-play" class="btn btn-secondary">▶ Play Animation</button>
+          <button id="btn-reset" class="btn btn-outline">↺ Reset</button>
+          <button id="btn-scratch" class="btn btn-danger">⚡ Trigger Scratch</button>
+          <button id="btn-heal" class="btn btn-success">🔥 Thermal Heal (T=1.3)</button>
+        </div>
+      </div>
+
+      <div class="canvas-container">
+        <canvas id="sim-canvas" width="900" height="420"></canvas>
+        <div class="sim-legend">
+          <div class="legend-item"><span class="dot dot-blue"></span> PTMEG/IPDI Backbone</div>
+          <div class="legend-item"><span class="dot dot-red"></span> Dynamic S-S Linkers (AFD)</div>
+          <div class="legend-item"><span class="dot dot-gold"></span> SiO2 Nanoparticles (2 wt%)</div>
+          <div class="legend-item"><span class="dot dot-grey"></span> Fixed Substrate Base</div>
+          <div class="legend-item"><span class="dot dot-ruby"></span> Virtual Indenter Tip (R=5)</div>
+        </div>
+      </div>
+
+      <!-- Real-time Simulation Telemetry -->
+      <div class="telemetry-bar">
+        <div class="telem-item">
+          <span class="telem-label">Groove Depth d(t):</span>
+          <span id="telem-depth" class="telem-val">0.00 LJ units</span>
+        </div>
+        <div class="telem-item">
+          <span class="telem-label">Healing Efficiency η%:</span>
+          <span id="telem-eff" class="telem-val">100.0% (Intact)</span>
+        </div>
+        <div class="telem-item">
+          <span class="telem-label">Normal Load Fz:</span>
+          <span id="telem-fz" class="telem-val">0.00 LJ units</span>
+        </div>
+        <div class="telem-item">
+          <span class="telem-label">Scratch Friction Fx:</span>
+          <span id="telem-fx" class="telem-val">0.00 LJ units</span>
+        </div>
+        <div class="telem-item">
+          <span class="telem-label">System Temperature:</span>
+          <span id="telem-temp" class="telem-val">T = 0.50 (Glassy)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Data Charts Section -->
+  <section id="interactive-charts" class="section">
+    <div class="section-header">
+      <div class="section-tag">DATA CHARTS & ANALYTICS</div>
+      <h2 class="section-title">Interactive Research Analytics & Dynamic Curves</h2>
+      <p class="section-subtitle">Switch between datasets to inspect force curves, depth profiles, Arrhenius kinetics, and durability.</p>
+    </div>
+
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-tab="tab-forces">Scratch Forces & COF</button>
+      <button class="tab-btn" data-tab="tab-profiles">Transverse Depth Profiles</button>
+      <button class="tab-btn" data-tab="tab-kinetics">Thermal Healing Kinetics</button>
+      <button class="tab-btn" data-tab="tab-tradeoff">Hardness-Healing Trade-off</button>
+      <button class="tab-btn" data-tab="tab-durability">10-Cycle Fatigue</button>
+    </div>
+
+    <div class="tab-content card">
+      <!-- Chart 1: Forces -->
+      <div id="tab-forces" class="chart-pane active">
+        <h3 class="chart-title">Dynamic Normal Force (Fz), Tangential Plowing Force (Fx), and Friction Coefficient (μ)</h3>
+        <div class="chart-box">
+          <canvas id="chart-forces"></canvas>
+        </div>
+        <p class="chart-caption">Measured in LAMMPS during indenter translation along X (depth = 9.0 LJ units). Addition of 2.0 wt% SiO2 increases shear resistance Fx from 18.2 to 27.5 LJ units.</p>
+      </div>
+
+      <!-- Chart 2: Profiles -->
+      <div id="tab-profiles" class="chart-pane">
+        <h3 class="chart-title">Transverse Cross-Sectional Surface Height Profiles z(y) Across Scratch Groove</h3>
+        <div class="chart-box">
+          <canvas id="chart-profiles"></canvas>
+        </div>
+        <p class="chart-caption">Groove profile evolution showing virgin surface, initial scratch (d0 = 9.2 LJ units) with lateral pile-up shoulders, intermediate annealing, and healed surface (dt = 0.6 LJ units, η = 93.5%).</p>
+      </div>
+
+      <!-- Chart 3: Kinetics -->
+      <div id="tab-kinetics" class="chart-pane">
+        <h3 class="chart-title">Experimental Scratch Depth Recovery Kinetics Across Temperatures (25°C to 100°C)</h3>
+        <div class="chart-box">
+          <canvas id="chart-kinetics"></canvas>
+        </div>
+        <p class="chart-caption">Arrhenius recovery kinetics showing rapid thermal healing at 65°C and 80°C driven by aromatic disulfide metathesis (activation energy Ea = 48.5 kJ/mol).</p>
+      </div>
+
+      <!-- Chart 4: Trade-off -->
+      <div id="tab-tradeoff" class="chart-pane">
+        <h3 class="chart-title">Resolution of the Stiffness-Healing Dilemma: Critical Load Lc vs. Healing Efficiency</h3>
+        <div class="chart-box">
+          <canvas id="chart-tradeoff"></canvas>
+        </div>
+        <p class="chart-caption">Identification of the optimal 2.0 wt% SiO2 concentration window maximizing pencil hardness (2H) and scratch resistance without suppressing chain reptation.</p>
+      </div>
+
+      <!-- Chart 5: Durability -->
+      <div id="tab-durability" class="chart-pane">
+        <h3 class="chart-title">Multi-Cycle Scratch Healing Durability & Fatigue Performance (10 Consecutive Cycles)</h3>
+        <div class="chart-box">
+          <canvas id="chart-durability"></canvas>
+        </div>
+        <p class="chart-caption">PUU-2.0 wt% SiO2 nanocomposite retains >86.5% healing efficiency after 10 repetitive scratch-heal cycles in the exact same location, preventing micro-void dilation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Complete Tabular Data Explorer -->
+  <section id="simulation-data-tables" class="section">
+    <div class="section-header">
+      <div class="section-tag">TABULAR DATA EXPLORER</div>
+      <h2 class="section-title">Comprehensive Simulation & Synthesis Data Tables</h2>
+      <p class="section-subtitle">Inspect raw numerical records, stoichiometric balances, potential parameters, and force logs.</p>
+    </div>
+
+    <div class="table-card card">
+      <div class="table-toolbar">
+        <div class="table-switch">
+          <button class="tbl-btn active" data-table="tbl-sim-log">Simulation Step Logs</button>
+          <button class="tbl-btn" data-table="tbl-stoich">Precursor Stoichiometry (100g)</button>
+          <button class="tbl-btn" data-table="tbl-potentials">Force Field Potentials</button>
+          <button class="tbl-btn" data-table="tbl-properties">Mechanical & Optical Metrics</button>
+        </div>
+        <div class="table-search">
+          <input type="text" id="table-filter" placeholder="Search data rows...">
+        </div>
+      </div>
+
+      <!-- Table 1: Simulation Logs -->
+      <div id="tbl-sim-log" class="table-container active">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Timestep</th>
+              <th>Indenter X</th>
+              <th>Indenter Z</th>
+              <th>Normal Force Fz (LJ)</th>
+              <th>Scratch Force Fx (LJ)</th>
+              <th>Groove Depth d(t)</th>
+              <th>Healing Efficiency η%</th>
+              <th>State / Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>0</td><td>12.00</td><td>32.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>100.0%</td><td>Approach / Pre-contact</td></tr>
+            <tr><td>1000</td><td>12.00</td><td>26.50</td><td>18.42</td><td>0.12</td><td>4.20</td><td>N/A</td><td>Normal Indentation</td></tr>
+            <tr><td>2000</td><td>12.00</td><td>21.00</td><td>44.85</td><td>0.24</td><td>9.15</td><td>0.0%</td><td>Full Penetration Depth</td></tr>
+            <tr><td>3500</td><td>21.00</td><td>21.00</td><td>45.12</td><td>26.84</td><td>9.22</td><td>0.0%</td><td>Lateral Plowing (Early)</td></tr>
+            <tr><td>5000</td><td>30.00</td><td>21.00</td><td>45.38</td><td>27.52</td><td>9.20</td><td>0.0%</td><td>Steady-State Plowing</td></tr>
+            <tr><td>6500</td><td>39.00</td><td>21.00</td><td>45.05</td><td>27.88</td><td>9.18</td><td>0.0%</td><td>Steady-State Plowing</td></tr>
+            <tr><td>8000</td><td>48.00</td><td>21.00</td><td>45.22</td><td>27.95</td><td>9.20</td><td>0.0%</td><td>Plowing Completed</td></tr>
+            <tr><td>9500</td><td>48.00</td><td>38.00</td><td>0.00</td><td>0.00</td><td>7.40</td><td>19.6%</td><td>Indenter Retracted (Springback)</td></tr>
+            <tr><td>14000</td><td>N/A</td><td>N/A</td><td>0.00</td><td>0.00</td><td>5.80</td><td>37.0%</td><td>Thermal Annealing (T=1.3)</td></tr>
+            <tr><td>18000</td><td>N/A</td><td>N/A</td><td>0.00</td><td>0.00</td><td>4.12</td><td>55.2%</td><td>Reversible Bond Metathesis</td></tr>
+            <tr><td>24000</td><td>N/A</td><td>N/A</td><td>0.00</td><td>0.00</td><td>1.85</td><td>79.9%</td><td>Chain Reptation across Trench</td></tr>
+            <tr><td>28000</td><td>N/A</td><td>N/A</td><td>0.00</td><td>0.00</td><td>0.60</td><td>93.5%</td><td>Final Healed & Cooled</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Table 2: Stoichiometry -->
+      <div id="tbl-stoich" class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Reagent Component</th>
+              <th>Molecular Wt (g/mol)</th>
+              <th>Molar Ratio</th>
+              <th>Neat PUU (g)</th>
+              <th>PUU-2 wt% SiO2 (g)</th>
+              <th>Functional Role in Network</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>PTMEG-1000 Polyol</td><td>1000.0</td><td>1.00 mol</td><td>52.8 g</td><td>51.7 g</td><td>Soft segment; low-Tg chain mobility</td></tr>
+            <tr><td>IPDI Diisocyanate</td><td>222.3</td><td>2.00 mol</td><td>23.5 g</td><td>23.0 g</td><td>Hard segment; UV-stable polyurethane core</td></tr>
+            <tr><td>AFD Crosslinker</td><td>248.4</td><td>1.00 mol</td><td>13.1 g</td><td>12.8 g</td><td>Dynamic aromatic disulfide metathesis nodes</td></tr>
+            <tr><td>APTES-SiO2 Nanoparticles</td><td>25 nm core</td><td>Varying</td><td>0.0 g</td><td>2.0 g (2.0 wt%)</td><td>Rigid filler; scratch hardness reinforcement</td></tr>
+            <tr><td>DBTDL Catalyst</td><td>631.6</td><td>0.05 wt%</td><td>0.05 g</td><td>0.05 g</td><td>Accelerates -OH / -NCO polyaddition</td></tr>
+            <tr><td>Anhydrous DMF Solvent</td><td>73.1</td><td>Solvent</td><td>80.0 mL</td><td>80.0 mL</td><td>Reaction medium; controls viscosity</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Table 3: Potentials -->
+      <div id="tbl-potentials" class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Pair / Bond Type</th>
+              <th>Potential Model</th>
+              <th>Well Depth ε / Spring K</th>
+              <th>Distance σ / R0</th>
+              <th>Cutoff Distance (rc)</th>
+              <th>Physical Interaction Represented</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Type 1 – Type 1</td><td>Lennard-Jones (12-6)</td><td>ε = 1.0</td><td>σ = 1.0</td><td>rc = 2.5 σ</td><td>Polymer backbone-backbone dispersion</td></tr>
+            <tr><td>Type 2 – Type 2</td><td>Lennard-Jones (12-6)</td><td>ε = 2.0</td><td>σ = 1.0</td><td>rc = 2.5 σ</td><td>AFD aromatic disulfide reversible crosslink</td></tr>
+            <tr><td>Type 3 – Type 3</td><td>Lennard-Jones (12-6)</td><td>ε = 3.0</td><td>σ = 1.2</td><td>rc = 2.5 σ</td><td>Rigid inorganic silica nanoparticle core</td></tr>
+            <tr><td>Type 4 – Type 4</td><td>WCA Repulsive LJ</td><td>ε = 1.0</td><td>σ = 1.0</td><td>rc = 1.122 σ</td><td>Rigid steel substrate anchor atoms</td></tr>
+            <tr><td>Intra-chain Backbone</td><td>FENE Non-linear</td><td>K = 30.0 ε/σ²</td><td>R0 = 1.5 σ</td><td>N/A</td><td>Covalent backbone chain connectivity</td></tr>
+            <tr><td>Chain Valence Angle</td><td>Harmonic</td><td>K_θ = 15.0 ε/rad²</td><td>θ0 = 120.0°</td><td>N/A</td><td>Chain flexibility & bending resistance</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Table 4: Properties -->
+      <div id="tbl-properties" class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Sample Code</th>
+              <th>SiO2 Loading</th>
+              <th>Pencil Hardness</th>
+              <th>Critical Load Lc</th>
+              <th>Healing η (65°C, 1h)</th>
+              <th>Transmittance (550nm)</th>
+              <th>60° Gloss (GU)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>PUU-0 (Neat)</td><td>0.0 wt%</td><td>HB</td><td>4.2 ± 0.3 N</td><td>96.5%</td><td>92.4%</td><td>96.5 GU</td></tr>
+            <tr><td>PUU-1.0</td><td>1.0 wt%</td><td>F</td><td>6.5 ± 0.4 N</td><td>95.0%</td><td>91.2%</td><td>95.2 GU</td></tr>
+            <tr class="highlight-row"><td><strong>PUU-2.0 (Optimal)</strong></td><td><strong>2.0 wt%</strong></td><td><strong>2H</strong></td><td><strong>9.5 ± 0.5 N</strong></td><td><strong>93.8%</strong></td><td><strong>89.5%</strong></td><td><strong>94.2 GU</strong></td></tr>
+            <tr><td>PUU-3.5</td><td>3.5 wt%</td><td>3H</td><td>12.0 ± 0.6 N</td><td>81.2%</td><td>84.1%</td><td>87.0 GU</td></tr>
+            <tr><td>PUU-5.0</td><td>5.0 wt%</td><td>4H</td><td>14.5 ± 0.7 N</td><td>62.4%</td><td>74.0%</td><td>76.5 GU</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Code Vault & Script Repository -->
+  <section id="code-repository" class="section">
+    <div class="section-header">
+      <div class="section-tag">CODE VAULT</div>
+      <h2 class="section-title">Open-Source Simulation Scripts & Python Tools</h2>
+      <p class="section-subtitle">Direct access to the complete LAMMPS input scripts, 3D coarse-grained generator, and post-processing tools.</p>
+    </div>
+
+    <div class="code-card card">
+      <div class="code-tabs">
+        <button class="code-tab-btn active" data-code="code-lammps">in.scratch_and_heal</button>
+        <button class="code-tab-btn" data-code="code-builder">build_polymer_composite.py</button>
+        <button class="code-tab-btn" data-code="code-analyzer">analyze_scratch_healing.py</button>
+        <button class="code-tab-btn" data-code="code-sop">Synthesis Lab SOP</button>
+      </div>
+
+      <div class="code-display">
+        <pre><code id="code-block" class="language-plaintext">Loading script...</code></pre>
+        <button id="btn-copy-code" class="btn btn-sm btn-secondary copy-btn">📋 Copy Script</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Center -->
+  <section id="downloads" class="section">
+    <div class="section-header">
+      <div class="section-tag">DOWNLOAD CENTER</div>
+      <h2 class="section-title">Download Complete Datasets, Models & 50+ Page Report</h2>
+      <p class="section-subtitle">Get all documentation, raw coordinate files, and publication-ready Word and Markdown documents.</p>
+    </div>
+
+    <div class="download-grid">
+      <div class="dl-card card">
+        <div class="dl-icon">📘</div>
+        <div class="dl-info">
+          <h3>50+ Page Comprehensive Report (.docx)</h3>
+          <p>Official Word document conforming to COEP University specifications with dynamic page numbers and tables.</p>
+          <a href="../COMPREHENSIVE_MINI_PROJECT_REPORT_50_PAGES.docx" class="btn btn-primary" download>Download DOCX (4.0 MB)</a>
+        </div>
+      </div>
+
+      <div class="dl-card card">
+        <div class="dl-icon">📄</div>
+        <div class="dl-info">
+          <h3>Full Markdown Report (.md)</h3>
+          <p>Complete markdown documentation with embedded equations, high-res figures, and literature citations.</p>
+          <a href="../MINI_PROJECT_REPORT.md" class="btn btn-secondary" download>Download Markdown (26 KB)</a>
+        </div>
+      </div>
+
+      <div class="dl-card card">
+        <div class="dl-icon">⚛️</div>
+        <div class="dl-info">
+          <h3>LAMMPS 3D Model Data File (.data)</h3>
+          <p>Full 4,296-atom coarse-grained substrate slab with dynamic sites and SiO2 nanoparticles.</p>
+          <a href="../02_simulation_lammps/polymer_composite.data" class="btn btn-outline" download>Download Data File (300 KB)</a>
+        </div>
+      </div>
+
+      <div class="dl-card card">
+        <div class="dl-icon">🖼️</div>
+        <div class="dl-info">
+          <h3>High-Res Vibrant Figures Bundle</h3>
+          <p>All 10 figures in 300 DPI publication resolution with large bold typography and vibrant print colors.</p>
+          <a href="../report_images/fig2_methodology_flowchart.png" class="btn btn-outline" target="_blank">View High-Res Figures</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <div class="footer-brand">COEP TECHNOLOGICAL UNIVERSITY, PUNE</div>
+        <div class="footer-sub">Department of Metallurgy and Materials Engineering | Mini-Project 2024–2025</div>
+      </div>
+      <div class="footer-rights">
+        Developed for Academic Research & Industrial Protective Coating Innovation.
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
